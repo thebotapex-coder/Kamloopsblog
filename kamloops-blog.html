@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kamloops Life — Powered by Advanced Plumbing</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+        
+        /* Sponsor Bar */
+        .sponsor-bar {
+            background: #1e40af;
+            color: white;
+            padding: 8px 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        .sponsor-bar a {
+            color: #bfdbfe;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .sponsor-bar a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+        }
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+        .header .sponsor-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        
+        /* Navigation */
+        .nav {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 0 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav ul {
+            max-width: 1200px;
+            margin: 0 auto;
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .nav li {
+            margin: 0;
+        }
+        .nav a {
+            display: block;
+            padding: 18px 24px;
+            color: #475569;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+            border-bottom: 3px solid transparent;
+        }
+        .nav a:hover {
+            color: #dc2626;
+            border-bottom-color: #dc2626;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Articles */
+        .articles {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .article-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.2s;
+        }
+        .article-card:hover {
+            transform: translateY(-4px);
+        }
+        .article-image {
+            height: 250px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+        .article-content {
+            padding: 30px;
+        }
+        .article-category {
+            display: inline-block;
+            background: #fef3c7;
+            color: #d97706;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .article-title {
+            font-size: 1.5rem;
+            color: #1e293b;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+        .article-excerpt {
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        .read-more {
+            color: #dc2626;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .read-more:hover {
+            text-decoration: underline;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .widget {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .widget h3 {
+            color: #1e293b;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #dc2626;
+        }
+        .sponsor-widget {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            text-align: center;
+        }
+        .sponsor-widget h3 {
+            color: white;
+            border-bottom-color: rgba(255,255,255,0.3);
+        }
+        .sponsor-widget .logo-placeholder {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+        .sponsor-widget h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        .sponsor-widget p {
+            opacity: 0.9;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        .sponsor-btn {
+            display: inline-block;
+            background: white;
+            color: #1e40af;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .sponsor-btn:hover {
+            background: #f1f5f9;
+        }
+        
+        .event-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .event-item:last-child {
+            border-bottom: none;
+        }
+        .event-date {
+            color: #dc2626;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        .event-title {
+            color: #1e293b;
+            font-weight: 500;
+        }
+        
+        .popular-list {
+            list-style: none;
+        }
+        .popular-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .popular-list a {
+            color: #475569;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .popular-list a:hover {
+            color: #dc2626;
+        }
+        .popular-list .number {
+            background: #dc2626;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        /* Newsletter */
+        .newsletter {
+            background: #1e293b;
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .newsletter h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        .newsletter p {
+            opacity: 0.9;
+            margin-bottom: 25px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .newsletter-form input {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        .newsletter-form button {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .newsletter-form button:hover {
+            background: #b91c1c;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .footer p {
+            margin-bottom: 10px;
+        }
+        .footer a {
+            color: #cbd5e1;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            color: white;
+        }
+        .footer .sponsor-footer {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #334155;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sponsor Bar -->
+    <div class="sponsor-bar">
+        🏠 Brought to you by <a href="tel:2508288761">Advanced Plumbing</a> — Proudly serving Kamloops since [year] • 250-828-8761
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <h1>Kamloops Life</h1>
+        <p>Your guide to the Tournament Capital</p>
+        <div class="sponsor-badge">Sponsored by Advanced Plumbing</div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#things-to-do">Things to Do</a></li>
+            <li><a href="#food">Food & Drink</a></li>
+            <li><a href="#outdoors">Outdoors</a></li>
+            <li><a href="#events">Events</a></li>
+            <li><a href="#living">Local Living</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Articles -->
+        <main class="articles">
+            <article class="article-card">
+                <div class="article-image">🏔️</div>
+                <div class="article-content">
+                    <span class="article-category">Outdoors</span>
+                    <h2 class="article-title">10 Hidden Hiking Trails Around Kamloops Only Locals Know About</h2>
+                    <p class="article-excerpt">Beyond the popular paths at Kenna Cartwright and Peterson Creek, these secret spots offer stunning views without the crowds. From hoodoo formations to hidden waterfalls...</p>
+                    <div class="article-meta">
+                        <span>March 4, 2026 • 8 min read</span>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image" style="background: linear-gradient(135deg, #f87171 0%, #dc2626 100%);">🍺</div>
+                <div class="article-content">
+                    <span class="article-category">Food & Drink</span>
+                    <h2 class="article-title">The Ultimate Kamloops Brewery Crawl: Red Collar, Iron Road & Beyond</h2>
+                    <p class="article-excerpt">From the award-winning lagers at Red Collar to the experimental small batches at Bright Eye, here's your guide to tasting the best craft beer in the Tournament Capital...</p>
+                    <div class="article-meta">
+                        <span>March 2, 2026 • 6 min read</span>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image" style="background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);">🏒</div>
+                <div class="article-content">
+                    <span class="article-category">Sports</span>
+                    <h2 class="article-title">Why Kamloops is Canada's Tournament Capital (And What That Means for You)</h2>
+                    <p class="article-excerpt">With over 100 tournaments hosted annually, from hockey to soccer to rugby, here's how to catch the action — or avoid the traffic — during tournament season...</p>
+                    <div class="article-meta">
+                        <span>February 28, 2026 • 5 min read</span>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image" style="background: linear-gradient(135deg, #34d399 0%, #10b981 100%);">🏡</div>
+                <div class="article-content">
+                    <span class="article-category">Local Living</span>
+                    <h2 class="article-title">Spring Home Maintenance Checklist for Kamloops Homeowners</h2>
+                    <p class="article-excerpt">From checking your sump pump before the thaw to inspecting outdoor taps, here's what every Kamloops homeowner should do as winter turns to spring...</p>
+                    <div class="article-meta">
+                        <span>February 25, 2026 • 7 min read</span>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image" style="background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);">🎬</div>
+                <div class="article-content">
+                    <span class="article-category">Entertainment</span>
+                    <h2 class="article-title">12 Hollywood Movies You Didn't Know Were Filmed in Kamloops</h2>
+                    <p class="article-excerpt">From Jurassic World to Power Rangers, here's where to find the actual filming locations from blockbuster hits shot right here in our backyard...</p>
+                    <div class="article-meta">
+                        <span>February 20, 2026 • 10 min read</span>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+            </article>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Sponsor Widget -->
+            <div class="widget sponsor-widget">
+                <div class="logo-placeholder">🔧</div>
+                <h4>Advanced Plumbing</h4>
+                <p>Your local plumbing & HVAC experts. Serving Kamloops homes and businesses with honest, reliable service.</p>
+                <p style="font-size: 1.2rem; margin: 15px 0;">250-828-8761</p>
+                <a href="mailto:info@advancedplumbingkamloop.ca" class="sponsor-btn">Get a Quote</a>
+            </div>
+
+            <!-- Upcoming Events -->
+            <div class="widget">
+                <h3>📅 Upcoming Events</h3>
+                <div class="event-item">
+                    <div class="event-date">Mar 7-9, 2026</div>
+                    <div class="event-title">Kamloops Home Show</div>
+                </div>
+                <div class="event-item">
+                    <div class="event-date">Mar 15, 2026</div>
+                    <div class="event-title">Farmers Market Opens</div>
+                </div>
+                <div class="event-item">
+                    <div class="event-date">Mar 20-22, 2026</div>
+                    <div class="event-title">Washed Up Hockey Tournament</div>
+                </div>
+                <div class="event-item">
+                    <div class="event-date">Apr 5, 2026</div>
+                    <div class="event-title">RibFest at Riverside Park</div>
+                </div>
+            </div>
+
+            <!-- Popular Posts -->
+            <div class="widget">
+                <h3>🔥 Popular Now</h3>
+                <ol class="popular-list">
+                    <li>
+                        <a href="#">
+                            <span class="number">1</span>
+                            Best Breakfast Spots in Kamloops
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="number">2</span>
+                            How to Winterize Your Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="number">3</span>
+                            Top 5 Day Trips From Kamloops
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="number">4</span>
+                            Local Contractors We Trust
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="number">5</span>
+                            Things to Do With Kids
+                        </a>
+                    </li>
+                </ol>
+            </div>
+
+            <!-- Categories -->
+            <div class="widget">
+                <h3>📂 Categories</h3>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    <span style="background: #f1f5f9; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem;">Outdoors</span>
+                    <span style="background: #f1f5f9; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem;">Food & Drink</span>
+                    <span style="background: #f1f5f9; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem;">Events</span>
+                    <span style="background: #f1f5f9; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem;">Home</span>
+                    <span style="background: #f1f5f9; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem;">Sports</span>
+                    <span style="background: #f1f5f9; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem;">Local News</span>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <h2>Stay in the Loop</h2>
+        <p>Get the best of Kamloops delivered to your inbox every week — events, local tips, and community news.</p>
+        <form class="newsletter-form">
+            <input type="email" placeholder="Your email address">
+            <button type="submit">Subscribe</button>
+        </form>
+        <p style="font-size: 0.85rem; margin-top: 20px; opacity: 0.7;">Powered by Advanced Plumbing • We respect your privacy</p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p><strong>Kamloops Life</strong> — Your local guide to the Tournament Capital</p>
+        <p>© 2026 Kamloops Life. All rights reserved.</p>
+        <div class="sponsor-footer">
+            <p>Sponsored by <a href="#"><strong>Advanced Plumbing</strong></a> — Kamloops' trusted plumbing & HVAC experts</p>
+            <p>250-828-8761 • info@advancedplumbingkamloop.ca</p>
+        </div>
+    </footer>
+</body>
+</html>
